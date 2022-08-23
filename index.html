@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>ikun贪吃蛇</title>
+	</head>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		body {
+			background: url(img/ikun.jpg) no-repeat;
+			background-size: cover;
+		}
+
+		.btnbox {
+			width: 200px;
+			height: 300px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+			position: fixed;
+			top: 50%;
+			transform: translateY(-50%);
+			/*???*/
+		}
+
+		.btnbox button {
+			width: 100px;
+			height: 50px;
+			font-size: 23px;
+			background: #FFA500;
+			color: white;
+			border-radius: 30px;
+		}
+
+		.map {
+			width: 1000px;
+			height: 600px;
+			background: url(./img/mapbg.png);
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			box-shadow: 0px 0px 100px black inset, 0px 0px 30px white;
+			opacity: 0.6;
+		}
+
+		.map>div {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			border-radius: 50%;
+			box-shadow: 0px 0px 10px yellow;
+		}
+		/* 三个类对应游戏中三种div：头、身体、食物 */
+		div.head {
+			background: url(img/small_head.jpg);
+		}
+
+		div.body {
+			background: url(img/small_basketball.jpg);
+		}
+
+		div.food {
+			background: url(img/ikun_food.jpg);
+		}
+		audio {
+			display: none;
+		}
+	</style>
+	<body>
+		<div class="btnbox">
+			<button>开始</button>
+			<button>暂停</button>
+			<button>结束</button>
+		</div>
+		<!-- 游戏区域：map -->
+		<div class="map">
+		</div>
+		
+		<audio src="./music/叫声.mp3" controls></audio>
+		<script src="./js/food.js"></script>
+		<script src="./js/Kunkun.js"></script>
+		<script src="./js/Game.js"></script>
+		<script type="text/javascript">
+			//游戏开始：相当于开始逐帧播放（setInterval每0.5秒更新map中的dom元素）
+			const game = new Game(".map");
+			game.start();
+			//监听玩家操作，相当于控制了下一帧dom元素的生成
+			document.onkeydown = function(e) {
+				console.log(e.keyCode)
+				switch (e.keyCode) {
+					case 37:
+						game.kunkun.change("left")
+						break;
+					case 38:
+						game.kunkun.change("top")
+						break;
+					case 39:
+						game.kunkun.change("right")
+						break;
+					case 40:
+						game.kunkun.change("bottom")
+						break;
+					case 13:
+						game.kunkun.start()
+						break;
+					case 32:
+						game.kunkun.pause()
+						break;
+				}
+			}
+		</script>
+	</body>
+</html>
